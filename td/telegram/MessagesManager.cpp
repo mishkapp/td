@@ -24940,10 +24940,10 @@ void MessagesManager::on_get_channel_dialog(DialogId dialog_id, MessageId last_m
         LOG(ERROR) << added_full_message_id << " doesn't became last new message";
         dump_debug_message_op(d, 2);
       }
-    } else {
-      set_dialog_last_new_message_id(d, last_message_id,
-                                     "on_get_channel_dialog 40");  // skip updates about some messages
-    }
+    } else if (last_message_id.get() > d->last_new_message_id.get()) {
+       set_dialog_last_new_message_id(d, last_message_id,
+                                      "on_get_channel_dialog 40");  // skip updates about some messages
+    }  
   }
 
   if (d->server_unread_count != server_unread_count || d->last_read_inbox_message_id != read_inbox_max_message_id) {
